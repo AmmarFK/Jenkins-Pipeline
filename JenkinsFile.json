@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo "Fetch the source code from the directory path specified by the environment variable: $SOURCE_CODE_PATH"
+                echo "Compile the code and generate any necessary artifacts"
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Unit tests"
+                echo "Integration tests"
+            }
+        }
+        stage('Code Quality Check') {
+            steps {
+                echo "Checking the quality of the code"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying the application to testing environment specified by the environment variable: $TEST_ENVIRONMENT"
+            }
+        }
+        stage('Approval') {
+            steps {
+                echo "Waiting for manual approval..."
+                sleep(time: 10, unit: 'SECONDS')
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo "Deploying the code to production environment: $PRODUCTION_ENVIRONMENT"
+            }
+        }
+    }
+    
+    environment {
+        SOURCE_CODE_PATH = "D:/Jenkins Files"
+        TEST_ENVIRONMENT = "testing_environment"
+        PRODUCTION_ENVIRONMENT = "ammar_production_environment"
+    }
+}
