@@ -4,56 +4,84 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Fetch the source code from the directory path specified by the environment variable: $SOURCE_CODE_PATH"
-                echo "Compile the code and generate any necessary artifacts"
+                echo "Building the code using Maven"
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                echo "Running unit tests with JUnit"
+                echo "Running integration tests with Selenium"
+            }
+            post {
+                always {
+                        success {
+                            mail to: "farooqammar074@gmail.com",
+                            emailext attachLog: true,
+                            subject: "Unit and Integration Tests Status",
+                            body: "Unit and Integration Tests Passed."
+                        }
+                        failure {
+                                mail to: "farooqammar074@gmail.com",
+                                emailext attachLog: true,
+                                subject: "Unit and Integration Tests Status",
+                                body: "Unit and Integration Tests Failed."
+                        }
+                    }
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                echo "Analyzing code with SonarQube"
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo "Performing security scan with OWASP ZAP"
             }
              post {
-                success {
-                    mail to: "farooqammar074@gmail.com",
-                    subject: "Build status email",
-                    body: "Build was successful!"
-                }
+                always {
+                        success {
+                            mail to: "farooqammar074@gmail.com",
+                            emailext attachLog: true,
+                            subject: "Security Scan Status",
+                            body: "Security Scan Passed."
+                        }
+                        failure {
+                                mail to: "farooqammar074@gmail.com",
+                                emailext attachLog: true,
+                                subject: "Security Scan Status",
+                                body: "Security Scan Failed."
+                        }
+                    }
             }
         }
-        stage('Test') {
+        stage('Deploy to Staging') {
             steps {
-                echo "Unit tests"
-                echo "Integration tests"
-            }
-              post {
-                success {
-                    mail to: "farooqammar074@gmail.com",
-                    subject: "Unit test email",
-                    body: "Integration tests successful!"
-                }
+                echo "Deploying the application to staging environment (AWS EC2)"
             }
         }
-        stage('Code Quality Check') {
+        stage('Integration Tests on Staging') {
             steps {
-                echo "Checking the quality of the code"
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo "Deploying the application to testing environment specified by the environment variable: $TEST_ENVIRONMENT"
-            }
-        }
-        stage('Approval') {
-            steps {
-                echo "Waiting for manual approval..."
-                sleep(time: 10, unit: 'SECONDS')
+                echo "Running integration tests on staging environment"
             }
         }
         stage('Deploy to Production') {
             steps {
-                echo "Deploying the code to production environment: $PRODUCTION_ENVIRONMENT"
+                echo "Deploying the application to production environment (AWS EC2)"
             }
         }
     }
     
-    environment {
-        SOURCE_CODE_PATH = "D:/Jenkins Files"
-        TEST_ENVIRONMENT = "testing_environment"
-        PRODUCTION_ENVIRONMENT = "ammar_production_environment"
+    post {
+        success {
+                mail to: "farooqammar074@gmail.com",
+                subject: "Pipeline Success",
+                body: "The pipeline has completed successfully."
+        }
+        failure {
+                mail to: "farooqammar074@gmail.com",
+                subject: "Pipeline Failure",
+                body: "The pipeline has failed."
+        }
     }
 }
