@@ -14,14 +14,13 @@ pipeline {
             }
               post {
                success {
-        archiveArtifacts(allowEmptyArchive: true, artifacts: '**/build.log')
-        emailext(
-            to: "farooqammar074@gmail.com",
-            subject: "Unit and Integration Tests Status",
-            body: "Unit and Integration Tests Passed.",
-            attachmentsPattern: '**/build.log'
-        )
-    }
+            emailext(
+                to: "farooqammar074@gmail.com",
+                subject: "Unit and Integration Tests Status",
+                body: "Unit and Integration Tests Passed.",
+                attachmentsPattern: '**/build.log'
+            )
+        }
                  failure {
                     mail to: "farooqammar074@gmail.com",
                     subject: "Unit and Integration Tests Status",
