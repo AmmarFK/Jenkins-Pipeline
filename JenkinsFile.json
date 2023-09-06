@@ -16,13 +16,11 @@ pipeline {
                 always {
                         success {
                             mail to: "farooqammar074@gmail.com",
-                            emailext attachLog: true,
                             subject: "Unit and Integration Tests Status",
                             body: "Unit and Integration Tests Passed."
                         }
                         failure {
                                 mail to: "farooqammar074@gmail.com",
-                                emailext attachLog: true,
                                 subject: "Unit and Integration Tests Status",
                                 body: "Unit and Integration Tests Failed."
                         }
@@ -42,13 +40,11 @@ pipeline {
                 always {
                         success {
                             mail to: "farooqammar074@gmail.com",
-                            emailext attachLog: true,
                             subject: "Security Scan Status",
                             body: "Security Scan Passed."
                         }
                         failure {
                                 mail to: "farooqammar074@gmail.com",
-                                emailext attachLog: true,
                                 subject: "Security Scan Status",
                                 body: "Security Scan Failed."
                         }
