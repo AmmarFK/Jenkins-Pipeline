@@ -12,18 +12,17 @@ pipeline {
                 echo "Running unit tests with JUnit"
                 echo "Running integration tests with Selenium"
             }
-            post {
-                always {
-                        success {
-                            mail to: "farooqammar074@gmail.com",
-                            subject: "Unit and Integration Tests Status",
-                            body: "Unit and Integration Tests Passed."
-                        }
-                        failure {
-                                mail to: "farooqammar074@gmail.com",
-                                subject: "Unit and Integration Tests Status",
-                                body: "Unit and Integration Tests Failed."
-                        }
+              post {
+                success {
+                    mail to: "farooqammar074@gmail.com",
+                    // emailext attachLog: true,
+                    subject: "Unit and Integration Tests Status",
+                    body: "Unit and Integration Tests Passed."
+                }
+                 failure {
+                    mail to: "farooqammar074@gmail.com",
+                    subject: "Unit and Integration Tests Status",
+                    body: "Unit and Integration Tests Failed."
                     }
             }
         }
@@ -36,19 +35,17 @@ pipeline {
             steps {
                 echo "Performing security scan with OWASP ZAP"
             }
-             post {
-                always {
-                        success {
-                            mail to: "farooqammar074@gmail.com",
+            post {
+                success {
+                    mail to: "farooqammar074@gmail.com",
                             subject: "Security Scan Status",
                             body: "Security Scan Passed."
-                        }
-                        failure {
-                                mail to: "farooqammar074@gmail.com",
+                }
+                 failure {
+                   mail to: "farooqammar074@gmail.com",
                                 subject: "Security Scan Status",
                                 body: "Security Scan Failed."
                         }
-                    }
             }
         }
         stage('Deploy to Staging') {
