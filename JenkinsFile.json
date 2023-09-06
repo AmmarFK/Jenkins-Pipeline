@@ -20,9 +20,10 @@ pipeline {
                       attachLog: true
                 }
                  failure {
-                    mail to: "farooqammar074@gmail.com",
+                    emailext to: "farooqammar074@gmail.com",
                     subject: "Unit and Integration Tests Status",
-                    body: "Unit and Integration Tests Failed."
+                    body: "Unit and Integration Tests Failed.",
+                    attachLog: true
                     }
             }
         }
@@ -37,15 +38,17 @@ pipeline {
             }
             post {
                 success {
-                    mail to: "farooqammar074@gmail.com",
-                            subject: "Security Scan Status",
-                            body: "Security Scan Passed."
+                    emailext to: "farooqammar074@gmail.com",
+                    subject: "Security Scan Status",
+                    body: "Security Scan Passed.",
+                    attachLog: true
                 }
                  failure {
-                   mail to: "farooqammar074@gmail.com",
-                                subject: "Security Scan Status",
-                                body: "Security Scan Failed."
-                        }
+                    emailext to: "farooqammar074@gmail.com",
+                    subject: "Security Scan Status",
+                    body: "Security Scan Failed.",
+                    attachLog: true
+                    }
             }
         }
         stage('Deploy to Staging') {
