@@ -18,6 +18,7 @@ pipeline {
                 to: "farooqammar074@gmail.com",
                 subject: "Unit and Integration Tests Status",
                 body: "Unit and Integration Tests Passed.",
+                attachLog: true,
                 attachmentsPattern: '**/build.log'
             )
         }
