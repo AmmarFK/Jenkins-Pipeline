@@ -7,6 +7,13 @@ pipeline {
                 echo "Fetch the source code from the directory path specified by the environment variable: $SOURCE_CODE_PATH"
                 echo "Compile the code and generate any necessary artifacts"
             }
+             post {
+                success {
+                    mail to: "farooqammar074@gmail.com",
+                    subject: "Build status email",
+                    body: "Build was successful!"
+                }
+            }
         }
         stage('Test') {
             steps {
