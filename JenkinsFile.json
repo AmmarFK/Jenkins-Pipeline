@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Code Analysis') {
             steps {
-                echo "analyzing code with SonarQube"
+                echo "Analyzing code with SonarQube"
             }
         }
         stage('Security Scan') {
